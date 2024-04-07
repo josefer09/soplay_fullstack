@@ -12,6 +12,25 @@ dotenv.config();
 
 conectarDB();
 
+//const dominiosPermitidos = [process.env.FRONTEND_URL];
+/**
+ * function(origin, callback) {
+        if(dominiosPermitidos.indexOf(origin) !== -1) {
+
+            callback(null, true)
+        } else {
+            callback(new Error('No esta permitido por CORS'));
+        }
+    }
+ */
+
+const dominiosPermitidos = ['*'];
+const corsOptions = {
+    origin: "*"
+};
+
+app.use(cors(corsOptions));
+
 app.use('/api/usuarios', usuarioRouter)
 
 
