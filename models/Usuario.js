@@ -49,5 +49,6 @@ UsuarioSchema.methods.comprobarPassword = async function (
   return await bycript.compare(passwordFormulario, this.password); // el compare retorna true o false
 };
 
-const Usuario = mongoose.model("Veterinario", UsuarioSchema);
+const Usuario = mongoose.model("Usuario", UsuarioSchema);
 export default Usuario;
+  

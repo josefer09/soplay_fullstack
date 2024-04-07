@@ -1,5 +1,5 @@
 import nodemailer from "nodemailer";
-import configurarTransporte from "./transportConfig";
+import configurarTransporte from "./transportConfig.js";
 const emailOlvidePassword = async (datos) => {
     const transport = configurarTransporte();
 

@@ -1,13 +1,13 @@
-import emailRegistro from "../helpers/emailRegistro";
-import generarId from "../helpers/generarId";
-import generarJWT from "../helpers/generarJWT";
-import Usuario from "../models/Usuario";
-import emailOlvidePassword from "../helpers/emailOlvidePassword";
+import emailRegistro from "../helpers/emailRegistro.js";
+import generarId from "../helpers/generarId.js";
+import generarJWT from "../helpers/generarJWT.js";
+import Usuario from "../models/Usuario.js";
+import emailOlvidePassword from "../helpers/emailOlvidePassword.js";
 
 
 const registrar = async (req, res) => {
-    const {correo, nombre} = req.body; //Verificar si existe
-    const usuarioExiste = await Usuario.findOne({correo});
+    const {email, nombre} = req.body; //Verificar si existe
+    const usuarioExiste = await Usuario.findOne({email});
 
     if(usuarioExiste) {
         const error = new Error('Empleado ya registrado');
