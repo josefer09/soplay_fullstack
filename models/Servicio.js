@@ -1,36 +1,29 @@
 import mongoose from 'mongoose';
 
-
-const empleadoSchema = mongoose.Schema({
+const servicioSchema = mongoose.Schema({
     nombre: {
         type: String,
         required: true,
         trim: true,
     },
-    apellido: {
+    descripcion: {
         type: String,
         required: true,
         trim: true,
     },
-    correo: {
+    foto: {
         type: String,
         required: true,
-        unique: true,
         trim: true,
     },
-    telefono: {
+    precioMin: {
         type: Number,
         default: null,
-        trim: true,
-    },
-    rol: {
-        type: String,
-        required: true,
         trim: true,
     },
 
 });
 
-const Empleado = mongoose.model("Empleado", empleadoSchema);
+const Servicio = mongoose.model("Servicio", servicioSchema);
 
-export default Empleado;
+export default Servicio;

@@ -1,6 +1,9 @@
+import emailRegistro from "../helpers/emailRegistro";
 import generarId from "../helpers/generarId";
 import generarJWT from "../helpers/generarJWT";
 import Usuario from "../models/Usuario";
+import emailOlvidePassword from "../helpers/emailOlvidePassword";
+
 
 const registrar = async (req, res) => {
     const {correo, nombre} = req.body; //Verificar si existe
@@ -92,6 +95,32 @@ const autenticar = async (req, res) => {
     }
 };
 
+const olvidePassword = async (req, res) => {
+    const {email} = req.body;
+    const existeUsuario = await Usuario.findOne({email});
+
+    if(!existeUsuario) {
+        const error = new Error('El usuario no existe');
+        return res.status(400).json({msg: error.message});
+    }
+
+    try {
+        existeUsuario.token = generarId();
+        existeUsuario.save();
+        // Enviar email con las instrucciones
+        emailOlvidePassword({
+            email,
+            nombre: existeUsuario.nombre,
+            token: existeUsuario.token,
+        });
+        res.json({
+            msg: "Hemos enviado un email a su correo con las instrucciones",
+        });
+    } catch (error) {
+        console.log(error);
+    }
+}
+
 const comprobarToken = async (req, res) => {
     const {token} = req.params;
 
@@ -104,3 +133,12 @@ const comprobarToken = async (req, res) => {
         return res.statuts(400).json({msg: error.message});
     }
 };
+
+export {
+    registrar,
+    perfil,
+    confirmar,
+    autenticar,
+    olvidePassword,
+    comprobarToken,
+}
