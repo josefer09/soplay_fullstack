@@ -19,13 +19,13 @@ const emailRegistro = async (datos) => {
 
   try {
     const info = await transport.sendMail({
-      from: '"SCY - Sistema de Cotizacion SOPLAY" <SCY@correo.com>',
+      from: '"CSY - Aplicación de Cotizacion SOPLAY" <CSY@correo.com>',
       to: email,
       subject: "Comprueba tu cuenta en CSY",
       text: 'Comprueba tu cuenta en CSY',
-      html: `<p>Hola: ${nombre}, comprueba tu cuenta en APV.</p>
+      html: `<p>Hola: ${nombre}, comprueba tu cuenta en CSY.</p>
       <P>Tu cuenta ya casi esta lista, solo debes comprobarla en el siguiente enlace:
-      <a href="${process.env.FRONTEND_URL}/confirmar/${token}">Comprobar Cuenta</a></P>
+      <a href="${process.env.FRONTEND_URL}/scy/confirmar/${token}">Comprobar Cuenta</a></P>
   
       <p>Si tu no creaste esta cuenta, ignora este mensaje</p>
       `,
