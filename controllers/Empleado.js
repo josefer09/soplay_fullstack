@@ -75,29 +75,26 @@ const obtenerEmpleados = async (req, res) => {
 //   }
 // };
 
-// const eliminarPaciente = async (req, res) => {
-//   try {
-//     const { id } = req.params;
+ const eliminarEmpleado = async (req, res) => {
+   try {
+     const { id } = req.params;
 
-//     const paciente = await Paciente.findById(id);
+     const empleado = await Empleado.findById(id);
 
-//     if (!paciente) {
-//       return res.status(404).json({ msg: "Paciente no encontrado" });
-//     }
+     if (!empleado) {
+       return res.status(404).json({ msg: "Empleado no encontrado" });
+     }
 
-//     if (paciente.veterinario._id.toString() !== req.veterinario.id.toString()) {
-//       const e = new Error("Acción no valida");
-//       return res.status(403).json({ msg: e.message });
-//     }
 
-//     await paciente.deleteOne();
-//     return res.status(200).json({msg: "Paciente Eliminado"});
-//   } catch (error) {
-//     console.log(error);
-//   }
-// };
+     await empleado.deleteOne();
+     return res.status(200).json({msg: "Empleado Eliminado"});
+   } catch (error) {
+     console.log(error);
+   }
+ };
 
 export {
   crearEmpleado,
   obtenerEmpleados,
+  eliminarEmpleado,
 };
