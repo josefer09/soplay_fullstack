@@ -1,5 +1,5 @@
 import express from 'express';
-import { crearEmpleado, obtenerEmpleados, eliminarEmpleado } from '../controllers/Empleado.js';
+import { crearEmpleado, obtenerEmpleados, eliminarEmpleado, obtenerEmpleado } from '../controllers/Empleado.js';
 import checkAuth from '../middleware/authMiddleware.js';
 
 const router = express.Router();
@@ -12,6 +12,7 @@ router
 router
 .route("/:id")
 .delete(checkAuth, eliminarEmpleado)
+.get(checkAuth, obtenerEmpleado)
 
 
 export default router;

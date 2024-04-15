@@ -25,28 +25,25 @@ const obtenerEmpleados = async (req, res) => {
   }
 };
 
-// const obtenerPaciente = async (req, res) => {
-//   try {
-//     const { id } = req.params;
-//     const paciente = await Empleado.findById(id);
+ const obtenerEmpleado = async (req, res) => {
+   try {
+     const { id } = req.params;
+     const empleado = await Empleado.findById(id);
 
-//     if (paciente.veterinario._id.toString() !== req.veterinario.id.toString()) {
-//       const e = new Error("Acción no valida");
-//       return res.status(403).json({ msg: e.message });
-//     }
 
-//     if (paciente) {
-//       return res.status(200).json(paciente);
-//     }
-//   } catch (error) {
-//     console.log(error);
-//   }
-// };
-// const actualizarPaciente = async (req, res) => {
-//   try {
-//     const { id } = req.params;
-//     const { veterinario, nombre, propietario, email, fecha, sintomas } =
-//       req.body;
+     if (empleado) {
+       return res.status(200).json(empleado);
+     }
+   } catch (error) {
+     console.log(error);
+   }
+ };
+
+//  const actualizarPaciente = async (req, res) => {
+//    try {
+//      const { id } = req.params;
+//      const { veterinario, nombre, propietario, email, fecha, sintomas } =
+//        req.body;
 
 //     // Construccion del objeto
 //     const infoPaciente = {
@@ -97,4 +94,5 @@ export {
   crearEmpleado,
   obtenerEmpleados,
   eliminarEmpleado,
+  obtenerEmpleado,
 };
