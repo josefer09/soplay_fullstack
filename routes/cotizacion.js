@@ -6,7 +6,7 @@ const router = express.Router();
 
 router
   .route("/")
-  .post(checkAuth, crearCotizacion)
+  .post(crearCotizacion)
   .get(checkAuth, obtenerCotizaciones)
 
 router

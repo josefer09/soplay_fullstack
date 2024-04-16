@@ -11,7 +11,7 @@ router.post('/autenticar', autenticar);
 router.post('/olvide-password', olvidePassword);
 
 // Area privada
-router.get('/', checkAuth, obtenerUsuarios);
+router.get('/perfil', checkAuth, perfil);
 router.get('/perfil/:id', checkAuth, obtenerUsuario);
 router.put('/perfil/:id', checkAuth, actualizarPerfil);
 router.delete('/perfil/:id', checkAuth, eliminarUsuario);

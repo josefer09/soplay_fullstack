@@ -7,7 +7,7 @@ const router = express.Router();
 router
   .route("/")
   .post(checkAuth, crearServicio)
-  .get(checkAuth, obtenerServicios)
+  .get( obtenerServicios)
 
 router
 .route("/:id")
