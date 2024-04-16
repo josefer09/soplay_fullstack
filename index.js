@@ -3,7 +3,8 @@ import conectarDB from './config/db.js';
 import dotenv from 'dotenv';
 import cors from 'cors';
 import usuarioRouter from './routes/usuarioRoute.js';
-import empleadoRouter from './routes/empleadoRoute.js'
+import empleadoRouter from './routes/empleadoRoute.js';
+import servicioRouter from './routes/servicioRoute.js';
 
 const app = express();
 
@@ -34,6 +35,7 @@ app.use(cors(corsOptions));
 
 app.use('/api/usuarios', usuarioRouter);
 app.use('/api/empleados', empleadoRouter);
+app.use('/api/servicios', servicioRouter);
 
 
 const PORT = process.env.PORT || 4000;

@@ -11,11 +11,6 @@ const servicioSchema = mongoose.Schema({
         required: true,
         trim: true,
     },
-    foto: {
-        type: String,
-        required: true,
-        trim: true,
-    },
     precioMin: {
         type: Number,
         default: null,
