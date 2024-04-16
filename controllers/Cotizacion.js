@@ -1,4 +1,6 @@
 import Cotizacion from '../models/Cotizacion.js';
+import Servicio from '../models/Servicio.js';
+import generarCotizacion from '../helpers/generarCotizacion.js';
 
 const crearCotizacion = async (req, res) => {
   // Crear Nuevo Paciente
@@ -6,7 +8,20 @@ const crearCotizacion = async (req, res) => {
   try {
     // Guardar en la db
     const cotizacionAlmacenada = await cotizacion.save();
-    res.status(200).json(cotizacionAlmacenada);
+
+    // Cambiar id por nombre:
+    const servicio = await Servicio.findById(cotizacionAlmacenada.servicio);
+
+    // Modificando la cotizacion para incluir el nombre
+    const cotizacionConServicioNombre = {
+        ...cotizacionAlmacenada.toObject(),
+        servicio: servicio.nombre // Modifica el valor
+    };
+
+    // Enviar correo
+    generarCotizacion(cotizacionConServicioNombre);
+
+    res.status(200).json(cotizacionConServicioNombre);
   } catch (error) {
     console.log(error);
   }

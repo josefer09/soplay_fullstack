@@ -36,6 +36,10 @@ const cotizacionSchema = mongoose.Schema({
         required: true,
         trim: true,
     },
+    estado: {
+        type: Boolean,
+        default: false
+    },
 });
 
 const Cotizacion = mongoose.model("Cotizacion", cotizacionSchema);
