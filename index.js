@@ -5,6 +5,7 @@ import cors from 'cors';
 import usuarioRouter from './routes/usuarioRoute.js';
 import empleadoRouter from './routes/empleadoRoute.js';
 import servicioRouter from './routes/servicioRoute.js';
+import cotizacionRouter from './routes/cotizacion.js';
 
 const app = express();
 
@@ -36,6 +37,7 @@ app.use(cors(corsOptions));
 app.use('/api/usuarios', usuarioRouter);
 app.use('/api/empleados', empleadoRouter);
 app.use('/api/servicios', servicioRouter);
+app.use('/api/cotizaciones', cotizacionRouter);
 
 
 const PORT = process.env.PORT || 4000;
