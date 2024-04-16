@@ -57,7 +57,7 @@ const obtenerCotizaciones = async (req, res) => {
  const actualizarCotizacion = async (req, res) => {
   try {
     const { id } = req.params;
-    const { nombre, nombre_empresa, correo, telefono, servicio, descripcion, foto} =
+    const { nombre, nombre_empresa, correo, telefono, servicio, descripcion,} =
       req.body;
 
     // Construccion del objeto
