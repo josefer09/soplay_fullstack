@@ -134,6 +134,80 @@ const comprobarToken = async (req, res) => {
     }
 };
 
+const obtenerUsuarios = async (req, res) => {
+    try {
+      const listaUsuarios = await Usuario.find();
+      return res.status(200).json(listaUsuarios);
+    } catch (error) {
+      console.log(error);
+      const e = new Error("Error en el servidor");
+      return res.status(404).json({ msg: e.message });
+    }
+  };
+  
+   const obtenerUsuario = async (req, res) => {
+     try {
+       const { id } = req.params;
+       const usuario = await Usuario.findById(id);
+  
+  
+       if (usuario) {
+         return res.status(200).json(usuario);
+       }
+     } catch (error) {
+       console.log(error);
+     }
+   };
+  
+   const actualizarPerfil = async (req, res) => {
+    const usuario = await Usuario.findById(req.params.id);
+    if (!usuario) {
+      const error = new Error("Hubo un error");
+      return res.status(404).json({ msg: error.message });
+    }
+  
+    const { email } = req.body;
+    // Veterinario intenta cambiar su email, validacion
+    if (usuario.email !== email) {
+      const existeEmail = await Usuario.findOne({ email });
+      if (existeEmail) {
+        const error = new Error("Ese Email ya esta en uso");
+        return res.status(400).json({ msg: error.message });
+      }
+    }
+  
+    try {
+      usuario.nombre = req.body.nombre; // Si no esta presente el nombre, asignale el que ya esta en la db para no perder nada de campos
+      usuario.email = req.body.email;
+      usuario.folio = req.body.folio;
+      usuario.telefono = req.body.telefono;
+  
+      const usuarioActualizado = await usuario.save();
+      res.json(usuarioActualizado);
+      return;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  
+   const eliminarUsuario = async (req, res) => {
+     try {
+       const { id } = req.params;
+  
+       const usuario = await Usuario.findById(id);
+  
+       if (!usuario) {
+         return res.status(404).json({ msg: "Usuario no encontrado" });
+       }
+  
+  
+       await usuario.deleteOne();
+       return res.status(200).json({msg: "Usuario Eliminado"});
+     } catch (error) {
+       console.log(error);
+     }
+   };
+
 export {
     registrar,
     perfil,
@@ -141,4 +215,8 @@ export {
     autenticar,
     olvidePassword,
     comprobarToken,
+    actualizarPerfil,
+    eliminarUsuario,
+    obtenerUsuario,
+    obtenerUsuarios,
 }
