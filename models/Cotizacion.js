@@ -33,7 +33,6 @@ const cotizacionSchema = mongoose.Schema({
     },
     foto: {
         type: String,
-        required: true,
         trim: true,
     },
     estado: {

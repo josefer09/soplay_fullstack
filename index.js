@@ -6,10 +6,16 @@ import usuarioRouter from './routes/usuarioRoute.js';
 import empleadoRouter from './routes/empleadoRoute.js';
 import servicioRouter from './routes/servicioRoute.js';
 import cotizacionRouter from './routes/cotizacion.js';
+import fileUpload from 'express-fileupload';
 
 const app = express();
 
+//* Middlewares
 app.use(express.json());
+app.use(express.urlencoded({ extended: true} ));
+app.use(fileUpload({
+    limits: { fileSize: 50 * 1024 * 1024 },
+}));
 
 dotenv.config();
 

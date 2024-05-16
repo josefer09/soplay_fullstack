@@ -1,29 +1,53 @@
 import Cotizacion from '../models/Cotizacion.js';
 import Servicio from '../models/Servicio.js';
 import generarCotizacion from '../helpers/generarCotizacion.js';
+import fileUpload from 'express-fileupload';
+import {  uploadSingle } from './FileUpload.js';
 
 const crearCotizacion = async (req, res) => {
-  // Crear Nuevo Paciente
-  const cotizacion = new Cotizacion(req.body);
   try {
-    // Guardar en la db
+    // Crear una nueva instancia de Cotizacion
+    const cotizacion = new Cotizacion(req.body);
+    
+    // Guardar la cotizacion en la base de datos
     const cotizacionAlmacenada = await cotizacion.save();
 
-    // Cambiar id por nombre:
+    // Obtener el nombre del servicio
     const servicio = await Servicio.findById(cotizacionAlmacenada.servicio);
 
-    // Modificando la cotizacion para incluir el nombre
+    // Modificar la cotizacion para incluir el nombre del servicio
     const cotizacionConServicioNombre = {
-        ...cotizacionAlmacenada.toObject(),
-        servicio: servicio.nombre // Modifica el valor
+      ...cotizacionAlmacenada.toObject(),
+      servicio: servicio.nombre // Modifica el valor
     };
 
-    // Enviar correo
-    generarCotizacion(cotizacionConServicioNombre);
+    // Almacenar la foto
+    if (req.files && req.files.fotoFile) {
+      const file = req.files.fotoFile;
+      const uploadPath = `uploads/${file.name}`;
+      
+      // Mover el archivo al directorio de uploads
+      file.mv(uploadPath, async (err) => {
+        if (err) {
+          console.error(err);
+          return res.status(500).json({ error: 'Error al subir la foto' });
+        }
+        
+        // Enviar correo
+        generarCotizacion(cotizacionConServicioNombre, file.name);
 
-    res.status(200).json(cotizacionConServicioNombre);
+        // Enviar respuesta al cliente
+        return res.status(200).json({
+          cotizacion: cotizacionConServicioNombre,
+          foto: uploadPath
+        });
+      });
+    } else {
+      return res.status(400).json({ error: 'No se proporcionó ninguna foto' });
+    }
   } catch (error) {
-    console.log(error);
+    console.error(error);
+    return res.status(500).json({ error: 'Error en el servidor' });
   }
 };
 

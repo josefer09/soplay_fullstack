@@ -1,7 +1,7 @@
 import nodemailer from "nodemailer";
 import configurarTransporte from "./transportConfig.js";
 
-const generarCotizacion = async (datos) => {
+const generarCotizacion = async (datos, nombreFoto) => {
   var transport = nodemailer.createTransport({
     service: process.env.MAILER_SERVICE,
         auth: {
@@ -31,13 +31,13 @@ const generarCotizacion = async (datos) => {
       <p>El cliente comenta que: ${descripcion}</p>
       <img src="cid:imagen" />
       `,
-      attachments: [
-        {
-          filename: 'imagen.jpg',
-          path: `./public/${foto}`,
-          cid: 'imagen'
-        }
-      ],
+       attachments: [
+         {
+           filename: 'imagen.jpg',
+           path: `./uploads/${nombreFoto}`,
+           cid: 'imagen'
+         }
+       ],
     });
   
     console.log("Mensaje enviado: %S", info.messageId);
